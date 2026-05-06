@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>🎬 My Movie AI App</title>
+<style>
+body {
+    font-family: Arial;
+    background: #0f172a;
+    color: white;
+    padding: 20px;
+}
+textarea {
+    width: 100%;
+    height: 150px;
+}
+button {
+    padding: 12px;
+    background: #22c55e;
+    border: none;
+    margin-top: 10px;
+    cursor: pointer;
+}
+.scene {
+    margin-top: 20px;
+    padding: 10px;
+    background: #1e293b;
+    border-radius: 10px;
+}
+img {
+    width: 100%;
+    border-radius: 10px;
+}
+</style>
+</head>
+<body>
+
+<h1>🎬 My AI Movie App</h1>
+
+<textarea id="script" placeholder="Write your movie script..."></textarea>
+<br>
+<button onclick="generate()">Generate Movie</button>
+
+<div id="output"></div>
+
+<script>
+function generate() {
+    let script = document.getElementById("script").value;
+    let scenes = script.split("\n").filter(s => s.trim() !== "");
+
+    let output = document.getElementById("output");
+    output.innerHTML = "";
+
+    scenes.forEach((scene, i) => {
+
+        let div = document.createElement("div");
+        div.className = "scene";
+
+        let img = document.createElement("img");
+        img.src = "https://picsum.photos/800/400?random=" + i;
+
+        let text = document.createElement("p");
+        text.innerText = scene;
+
+        let btn = document.createElement("button");
+        btn.innerText = "🔊 Play Voice";
+        btn.onclick = () => {
+            let speech = new SpeechSynthesisUtterance(scene);
+            speech.rate = 1;
+            speechSynthesis.speak(speech);
+        };
+
+        div.appendChild(img);
+        div.appendChild(text);
+        div.appendChild(btn);
+
+        output.appendChild(div);
+    });
+}
+</script>
+
+</body>
+</html>
